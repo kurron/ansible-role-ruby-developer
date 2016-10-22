@@ -32,8 +32,8 @@ galaxy_info:
 
   galaxy_tags:
       - development
-      - jvm
-      - java
+      - ruby
+      - jetbrains
 
 dependencies: []
   # List your role dependencies here, one per line.

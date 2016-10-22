@@ -11,7 +11,9 @@ TODO
 Role Variables
 --------------
 
-TODO
+* ruby_rvm_install: true
+* ruby_rubymine_install: true
+* ruby_rubymine_version: 2016.2.4
 
 Dependencies
 ------------
@@ -24,7 +26,7 @@ Example Playbook
 ```
 - hosts: servers
   roles:
-      - { role: kurron.ruby-developer, jvm_sdkman_install: false, vm_intellij_version: 2016.2.4, jvm_intellij_build: 162.2032.8 }
+      - { role: kurron.ruby-developer, ruby_rvm_install: false, ruby_rubymine_version: 2016.2.4 }
 ```
 
 License

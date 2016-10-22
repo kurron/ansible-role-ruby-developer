@@ -2,14 +2,8 @@
 ruby_download_directory: Downloads
 ruby_software_directory: Software
 
-jvm_oracle_jdk_install: true
-jvm_oracle_jdk_version: jdk1.8.0_111
-jvm_oracle_jdk_path: 8u111-b14/jdk-8u111
-jvm_oracle_jdk_link_destination: oracle-jdk-8
-
 ruby_rvm_install: true
 
 ruby_rubymine_install: true
 ruby_rubymine_version: 2016.2.4
-ruby_rubymine_build: 162.2032.8
 
