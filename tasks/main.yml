@@ -51,7 +51,7 @@
       dest: "{{ansible_user_dir}}/Desktop/rubymine.desktop"
       owner: "{{ansible_user_uid}}"
       group: "{{ansible_user_gid}}"
-      mode: 0555
+      mode: 0755
   when: ruby_rubymine_install
 
 - name: Set Global Environment To Have RubyMine Use Shared JDK

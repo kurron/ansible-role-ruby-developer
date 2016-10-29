@@ -3,7 +3,7 @@ Version=1.0
 Type=Application
 Name=RubyMine
 Comment=Ruby IDE
-Exec={{ansible_user_dir}}/Software/rubymine/bin/rubymine.sh
+Exec=env RUBYMINE_JDK={{jdk_global_jdk_directory}} {{ansible_user_dir}}/Software/rubymine/bin/rubymine.sh
 Icon={{ansible_user_dir}}/Software/rubymine/bin/rubymine.png
 Path=
 Terminal=false
