@@ -1,6 +1,6 @@
 galaxy_info:
   author: Ronald D. Kurr
-  description: Long time slinger of code.
+  description: Ruby IDE and command-line tools.
   company: jvmguy.com
 
   license: Apache 2
@@ -34,6 +34,8 @@ galaxy_info:
       - development
       - ruby
       - jetbrains
+      - RubyMine
+      - rvm
 
 dependencies:
     - { role: kurron.jdk }
