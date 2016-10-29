@@ -1,60 +1,44 @@
 ---
-- name: Create unprivledged folders
-  become: no
-  file:
-      path: "{{item}}"
-      state: directory
-      mode: 0755
-      recurse: yes
-  with_items:
-  - "{{ansible_user_dir}}/{{ruby_software_directory}}"
-
-- name: Install Required Packages
-  become: yes
-  package:
-      name: "{{item}}"
-      state: present
-  with_items:
-  - "curl"
-
 - name: Download RVM
   become: no
   get_url:
       url: "https://get.rvm.io"
-      dest: "{{ansible_user_dir}}/{{ruby_download_directory}}/rvm-install.sh"
+      dest: "{{ansible_user_dir}}/{{base_download_directory}}/rvm-install.sh"
       mode: 0554
   when: ruby_rvm_install
 
 - name: Run RVM Installer
   become: no
-  shell: "{{ansible_user_dir}}/{{ruby_download_directory}}/rvm-install.sh"
+  shell: "{{ansible_user_dir}}/{{base_download_directory}}/rvm-install.sh"
+  args:
+      creates: "{{ansible_user_dir}}/.rvm/VERSION"
   when: ruby_rvm_install
 
 - name: Download RubyMine Tarball
   become: no
   get_url:
       url: "https://download.jetbrains.com/ruby/RubyMine-{{ruby_rubymine_version}}.tar.gz"
-      dest: "{{ansible_user_dir}}/{{ruby_download_directory}}/rubymine-{{ruby_rubymine_version}}.tar.gz"
+      dest: "{{ansible_user_dir}}/{{base_download_directory}}/rubymine-{{ruby_rubymine_version}}.tar.gz"
       mode: 0444
   when: ruby_rubymine_install
 
 - name: Uncompress RubyMine Tarball
   become: no
   unarchive:
-      src: "{{ansible_user_dir}}/{{ruby_download_directory}}/rubymine-{{ruby_rubymine_version}}.tar.gz"
-      dest: "{{ansible_user_dir}}/{{ruby_software_directory}}"
+      src: "{{ansible_user_dir}}/{{base_download_directory}}/rubymine-{{ruby_rubymine_version}}.tar.gz"
+      dest: "{{ansible_user_dir}}/{{base_software_directory}}"
       copy: no
       owner: "{{ansible_user_uid}}"
       group: "{{ansible_user_gid}}"
       mode: 0555
-      creates: "{{ansible_user_dir}}/{{ruby_software_directory}}/RubyMine-{{ruby_rubymine_version}}/build.txt"
+      creates: "{{ansible_user_dir}}/{{base_software_directory}}/RubyMine-{{ruby_rubymine_version}}/build.txt"
   when: ruby_rubymine_install
 
 - name: Create Softlink To RubyMine
   become: no
   file:
-      src: "{{ansible_user_dir}}/{{ruby_software_directory}}/RubyMine-{{ruby_rubymine_version}}"
-      dest: "{{ansible_user_dir}}/{{ruby_software_directory}}/rubymine"
+      src: "{{ansible_user_dir}}/{{base_software_directory}}/RubyMine-{{ruby_rubymine_version}}"
+      dest: "{{ansible_user_dir}}/{{base_software_directory}}/rubymine"
       owner: "{{ansible_user_uid}}"
       group: "{{ansible_user_gid}}"
       state: link
@@ -70,4 +54,20 @@
       mode: 0555
   when: ruby_rubymine_install
 
+- name: Set Global Environment To Have RubyMine Use Shared JDK
+  become: yes
+  template:
+      src: "templates/rubymine-environment.sh.j2"
+      dest: "/etc/profile.d/rubymine-environment.sh"
+      owner: "{{ansible_user_uid}}"
+      group: "{{ansible_user_gid}}"
+      mode: 0555
+  when: ruby_rubymine_share_jdk
+
+- name: Remove RubyMine's Embedded JDK
+  become: no
+  file:
+      path: "{{ansible_user_dir}}/{{base_software_directory}}/rubymine/jre"
+      state: absent
+  when: ruby_rubymine_share_jdk
 

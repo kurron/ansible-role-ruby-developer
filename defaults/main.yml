@@ -1,9 +1,7 @@
 ---
-ruby_download_directory: Downloads
-ruby_software_directory: Software
-
 ruby_rvm_install: true
 
 ruby_rubymine_install: true
 ruby_rubymine_version: 2016.2.4
+ruby_rubymine_share_jdk: true
 
