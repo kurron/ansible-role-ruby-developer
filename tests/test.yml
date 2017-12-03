@@ -1,4 +1,4 @@
 ---
-- hosts: remote
+- hosts: localhost
   roles:
-  - role: ../../ansible-role-ruby-developer
+  - { role: kurron.ruby-developer, jdk_azul_jdk_install: false }
