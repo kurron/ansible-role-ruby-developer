@@ -2,5 +2,5 @@
 ruby_rvm_install: true
 
 ruby_rubymine_install: true
-ruby_rubymine_version: 2017.3
+ruby_rubymine_version: 2017.3.1
 ruby_rubymine_share_jdk: true
